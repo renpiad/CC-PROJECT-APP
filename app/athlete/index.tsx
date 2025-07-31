@@ -1,7 +1,8 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Header from '../components/Header';
+import SearchBar from '../components/SearchBar';
 import SubTab from '../components/SUBTAB';
 
 export default function AthleteScreen() {
@@ -13,20 +14,29 @@ export default function AthleteScreen() {
     { id: 'games', label: 'Games' }
   ];
 
+  const handleNotificationPress = () => {
+    // Handle notification press
+    console.log('Notification pressed');
+  };
+
+  const handleMenuPress = () => {
+    // Handle menu press
+    console.log('Menu pressed');
+  };
+
+  const handleFilterPress = () => {
+    // Handle filter press
+    console.log('Filter pressed');
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-white">
-      {/* Header Section */}
-      <View className="flex-row items-center justify-between px-5 py-4">
-        <Text className="text-xl font-bold text-black">Athletes & Games</Text>
-        <View className="flex-row space-x-4">
-          <TouchableOpacity>
-            <Ionicons name="notifications" size={24} color="#000" />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Ionicons name="menu" size={24} color="#000" />
-          </TouchableOpacity>
-        </View>
-      </View>
+      {/* Header Section - Using reusable Header component */}
+      <Header
+        title="Athletes & Games"
+        onNotificationPress={handleNotificationPress}
+        onMenuPress={handleMenuPress}
+      />
 
       {/* Tab Navigation - Using reusable SubTab component */}
       <SubTab
@@ -35,22 +45,12 @@ export default function AthleteScreen() {
         onTabChange={setActiveTab}
       />
 
-      {/* Search and Filter Section */}
-      <View className="flex-row items-center px-5 py-4">
-        <View className="flex-1 flex-row items-center rounded-lg bg-gray-100 px-3 py-2">
-          <Ionicons name="search" size={20} color="#666" />
-          <TextInput
-            className="ml-2 flex-1 text-base"
-            placeholder="Search..."
-            placeholderTextColor="#666"
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
-        </View>
-        <TouchableOpacity className="ml-3 rounded-lg bg-gray-100 p-2">
-          <Ionicons name="funnel" size={20} color="#666" />
-        </TouchableOpacity>
-      </View>
+      {/* Search and Filter Section - Using reusable SearchBar component */}
+      <SearchBar
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        onFilterPress={handleFilterPress}
+      />
 
       {/* Placeholder content */}
       <View className="flex-1 items-center justify-center px-5 pb-24">

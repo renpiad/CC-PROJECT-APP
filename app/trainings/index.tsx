@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Header from '../components/Header';
+import SearchBar from '../components/SearchBar';
 import SubTab from '../components/SUBTAB';
 
 export default function TrainingsScreen() {
   const [activeTab, setActiveTab] = useState('programs');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const trainingTabs = [
     { id: 'programs', label: 'Programs' },
@@ -12,18 +15,32 @@ export default function TrainingsScreen() {
     { id: 'sessions', label: 'Sessions' }
   ];
 
+  const handleFilterPress = () => {
+    console.log('Training filter pressed');
+  };
+
   return (
     <SafeAreaView className="flex-1 bg-white">
-      {/* Header Section */}
-      <View className="flex-row items-center justify-between px-5 py-4">
-        <Text className="text-xl font-bold text-black">Trainings</Text>
-      </View>
+      {/* Header Section - Using reusable Header component */}
+      <Header
+        title="Trainings"
+        showNotifications={false} // Example: hide notifications for this screen
+        onMenuPress={() => console.log('Training menu pressed')}
+      />
 
       {/* Tab Navigation - Using reusable SubTab component */}
       <SubTab
         tabs={trainingTabs}
         activeTab={activeTab}
         onTabChange={setActiveTab}
+      />
+
+      {/* Search and Filter Section - Using reusable SearchBar component */}
+      <SearchBar
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        placeholder="Search trainings..."
+        onFilterPress={handleFilterPress}
       />
 
       {/* Placeholder content */}
