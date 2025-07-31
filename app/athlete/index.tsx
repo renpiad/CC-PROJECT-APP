@@ -1,10 +1,17 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import SubTab from '../components/SUBTAB';
 
 export default function AthleteScreen() {
-  const [activeTab, setActiveTab] = useState<'athletes' | 'games'>('athletes');
+  const [activeTab, setActiveTab] = useState('athletes');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const athleteTabs = [
+    { id: 'athletes', label: 'Athletes' },
+    { id: 'games', label: 'Games' }
+  ];
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -21,27 +28,27 @@ export default function AthleteScreen() {
         </View>
       </View>
 
-      {/* Tab Navigation - Full width and responsive */}
-      <View className="w-full flex-row px-5">
-        <TouchableOpacity
-          className={`flex-1 items-center pb-2 ${activeTab === 'athletes' ? 'border-b-2 border-red-500' : ''}`}
-          onPress={() => setActiveTab('athletes')}
-        >
-          <Text
-            className={`font-semibold ${activeTab === 'athletes' ? 'text-black' : 'text-gray-500'}`}
-          >
-            Athletes
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          className={`flex-1 items-center pb-2 ${activeTab === 'games' ? 'border-b-2 border-red-500' : ''}`}
-          onPress={() => setActiveTab('games')}
-        >
-          <Text
-            className={`font-semibold ${activeTab === 'games' ? 'text-black' : 'text-gray-500'}`}
-          >
-            Games
-          </Text>
+      {/* Tab Navigation - Using reusable SubTab component */}
+      <SubTab
+        tabs={athleteTabs}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+      />
+
+      {/* Search and Filter Section */}
+      <View className="flex-row items-center px-5 py-4">
+        <View className="flex-1 flex-row items-center rounded-lg bg-gray-100 px-3 py-2">
+          <Ionicons name="search" size={20} color="#666" />
+          <TextInput
+            className="ml-2 flex-1 text-base"
+            placeholder="Search..."
+            placeholderTextColor="#666"
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+        </View>
+        <TouchableOpacity className="ml-3 rounded-lg bg-gray-100 p-2">
+          <Ionicons name="funnel" size={20} color="#666" />
         </TouchableOpacity>
       </View>
 
