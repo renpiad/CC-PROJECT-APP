@@ -37,8 +37,8 @@ export default function AthleteCard({
     >
       <View className="flex-row items-center">
         {/* Player Silhouette Icon */}
-        <View className="mr-4 h-12 w-12 items-center justify-center rounded-full bg-gray-200">
-          <Ionicons name="person" size={24} color="#666" />
+        <View className="mr-4 h-16 w-16 items-center justify-center rounded-full bg-gray-200">
+          <Ionicons name="person" size={32} color="#666" />
         </View>
 
         {/* Player Information */}
