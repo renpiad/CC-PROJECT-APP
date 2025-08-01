@@ -69,14 +69,14 @@ export default function CustomTabBar() {
               onPress={() => handleTabPress(tab.route)}
               activeOpacity={0.7}
             >
-              <View className="relative mb-1 items-center">
+              <View className="relative mb-2 items-center">
                 <Ionicons
                   name={tab.icon}
                   size={22}
                   color={active ? '#FF0000' : '#000000'}
                 />
                 {active && (
-                  <View className="absolute -bottom-1.5 h-1 w-1 rounded-full bg-red-500" />
+                  <View className="absolute -bottom-2 h-1 w-1 rounded-full bg-red-500" />
                 )}
               </View>
               <Text
