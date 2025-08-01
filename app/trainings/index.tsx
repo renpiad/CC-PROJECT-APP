@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import FloatingActionButton from '../components/FloatingActionButton';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import SubTab from '../components/SUBTAB';
@@ -17,6 +18,21 @@ export default function TrainingsScreen() {
 
   const handleFilterPress = () => {
     console.log('Training filter pressed');
+  };
+
+  const handleAddProgram = () => {
+    console.log('Add program pressed');
+    // Navigate to add program screen
+  };
+
+  const handleAddExercise = () => {
+    console.log('Add exercise pressed');
+    // Navigate to add exercise screen
+  };
+
+  const handleAddSession = () => {
+    console.log('Add session pressed');
+    // Navigate to add session screen
   };
 
   return (
@@ -56,6 +72,35 @@ export default function TrainingsScreen() {
           Training {activeTab} content coming soon...
         </Text>
       </View>
+
+      {/* Floating Action Button - Different icons for different tabs */}
+      {activeTab === 'programs' && (
+        <FloatingActionButton
+          icon="add"
+          onPress={handleAddProgram}
+          color="#FF0000"
+          size="medium"
+          position="bottom-right"
+        />
+      )}
+      {activeTab === 'exercises' && (
+        <FloatingActionButton
+          icon="barbell"
+          onPress={handleAddExercise}
+          color="#059669"
+          size="medium"
+          position="bottom-right"
+        />
+      )}
+      {activeTab === 'sessions' && (
+        <FloatingActionButton
+          icon="play"
+          onPress={handleAddSession}
+          color="#6366F1"
+          size="medium"
+          position="bottom-right"
+        />
+      )}
     </SafeAreaView>
   );
 }

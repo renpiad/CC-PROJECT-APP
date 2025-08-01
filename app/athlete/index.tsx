@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AthleteCard from '../components/AthleteCard';
+import FloatingActionButton from '../components/FloatingActionButton';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import SubTab from '../components/SUBTAB';
@@ -49,6 +50,11 @@ export default function AthleteScreen() {
   const handleAthletePress = (athlete: Athlete) => {
     console.log('Athlete pressed:', athlete.name);
     // Navigate to athlete detail screen
+  };
+
+  const handleAddAthlete = () => {
+    console.log('Add athlete pressed');
+    // Navigate to add athlete screen
   };
 
   const filteredAthletes = athletes.filter(
@@ -109,6 +115,17 @@ export default function AthleteScreen() {
           </View>
         )}
       </View>
+
+      {/* Floating Action Button */}
+      {activeTab === 'athletes' && (
+        <FloatingActionButton
+          icon="add"
+          onPress={handleAddAthlete}
+          color="#FF0000"
+          size="medium"
+          position="bottom-right"
+        />
+      )}
     </SafeAreaView>
   );
 }
