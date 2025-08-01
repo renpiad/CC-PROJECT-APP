@@ -19,7 +19,12 @@ export default function SubTab({
   className = ''
 }: SubTabProps) {
   return (
-    <View className={`w-full flex-row px-5 ${className}`}>
+    <View
+      className={`mt-2 w-full flex-row px-5 py-3 ${className}`}
+      style={{
+        backgroundColor: '#F0F0F0'
+      }}
+    >
       {tabs.map((tab, index) => (
         <TouchableOpacity
           key={tab.id}

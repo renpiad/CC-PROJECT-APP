@@ -20,7 +20,7 @@ export default function SearchBar({
 }: SearchBarProps) {
   return (
     <View className={`flex-row items-center px-5 py-4 ${className}`}>
-      <View className="flex-1 flex-row items-center rounded-lg bg-gray-100 px-3 py-2">
+      <View className="flex-1 flex-row items-center rounded-lg bg-white px-3 py-2">
         <Ionicons name="search" size={20} color="#666" />
         <TextInput
           className="ml-2 flex-1 text-base"
@@ -32,7 +32,7 @@ export default function SearchBar({
       </View>
       {showFilter && (
         <TouchableOpacity
-          className="ml-3 rounded-lg bg-gray-100 p-2"
+          className="ml-3 rounded-lg bg-white p-2"
           onPress={onFilterPress}
         >
           <Ionicons name="funnel" size={20} color="#666" />

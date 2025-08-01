@@ -20,7 +20,7 @@ export default function TrainingsScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1" style={{ backgroundColor: '#F0F0F0' }}>
       {/* Header Section - Using reusable Header component */}
       <Header
         title="Trainings"
