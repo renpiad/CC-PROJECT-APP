@@ -1,8 +1,10 @@
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AthleteCard from '../components/AthleteCard';
 import FloatingActionButton from '../components/FloatingActionButton';
+import GameCard from '../components/GameCard';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import SubTab from '../components/SUBTAB';
@@ -12,6 +14,12 @@ interface Athlete {
   number: string;
   name: string;
   position: string;
+}
+
+interface Game {
+  id: string;
+  gameName: string;
+  date: string;
 }
 
 const MOCK_ATHLETES: Athlete[] = [
@@ -25,10 +33,25 @@ const MOCK_ATHLETES: Athlete[] = [
   { id: '8', number: '11', name: 'Kevin Lee', position: 'Forward' }
 ];
 
+const MOCK_GAMES: Game[] = [
+  {
+    id: '1',
+    gameName: 'UNC Basketball Team vs State University',
+    date: 'Oct 15, 2025'
+  },
+  { id: '2', gameName: 'Game 2', date: 'Date' },
+  { id: '3', gameName: 'Game 3', date: 'Date' },
+  { id: '4', gameName: 'Game 4', date: 'Date' },
+  { id: '5', gameName: 'Game 5', date: 'Date' },
+  { id: '6', gameName: 'Game 6', date: 'Date' }
+];
+
 export default function AthleteScreen() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState('athletes');
   const [searchQuery, setSearchQuery] = useState('');
   const [athletes, setAthletes] = useState<Athlete[]>(MOCK_ATHLETES);
+  const [games, setGames] = useState<Game[]>(MOCK_GAMES);
 
   const athleteTabs = [
     { id: 'athletes', label: 'Athletes' },
@@ -50,11 +73,22 @@ export default function AthleteScreen() {
   const handleAthletePress = (athlete: Athlete) => {
     console.log('Athlete pressed:', athlete.name);
     // Navigate to athlete detail screen
+    router.push(`/athlete/${athlete.id}` as any);
   };
 
   const handleAddAthlete = () => {
     console.log('Add athlete pressed');
     // Navigate to add athlete screen
+  };
+
+  const handleAddGame = () => {
+    console.log('Add game pressed');
+    // Navigate to add game screen
+  };
+
+  const handleGamePress = (game: Game) => {
+    console.log('Game pressed:', game.gameName);
+    // Navigate to game detail screen
   };
 
   const filteredAthletes = athletes.filter(
@@ -64,12 +98,26 @@ export default function AthleteScreen() {
       athlete.position.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const filteredGames = games.filter(
+    game =>
+      game.gameName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      game.date.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   const renderAthleteCard = ({ item }: { item: Athlete }) => (
     <AthleteCard
       playerNumber={item.number}
       playerName={item.name}
       position={item.position}
       onPress={() => handleAthletePress(item)}
+    />
+  );
+
+  const renderGameCard = ({ item }: { item: Game }) => (
+    <GameCard
+      gameName={item.gameName}
+      date={item.date}
+      onPress={() => handleGamePress(item)}
     />
   );
 
@@ -96,7 +144,7 @@ export default function AthleteScreen() {
         onFilterPress={handleFilterPress}
       />
 
-      {/* Athlete List */}
+      {/* Athlete/Game List */}
       <View className="flex-1 px-3">
         {activeTab === 'athletes' ? (
           <FlatList
@@ -107,25 +155,24 @@ export default function AthleteScreen() {
             contentContainerStyle={{ paddingBottom: 100, paddingHorizontal: 8 }}
           />
         ) : (
-          <View className="flex-1 items-center justify-center">
-            <Text className="text-lg font-semibold text-gray-500">Games</Text>
-            <Text className="text-center text-gray-400">
-              Games content coming soon...
-            </Text>
-          </View>
+          <FlatList
+            data={filteredGames}
+            renderItem={renderGameCard}
+            keyExtractor={item => item.id}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 100, paddingHorizontal: 8 }}
+          />
         )}
       </View>
 
       {/* Floating Action Button */}
-      {activeTab === 'athletes' && (
-        <FloatingActionButton
-          icon="add"
-          onPress={handleAddAthlete}
-          color="#FF0000"
-          size="medium"
-          position="bottom-right"
-        />
-      )}
+      <FloatingActionButton
+        icon="add"
+        onPress={activeTab === 'athletes' ? handleAddAthlete : handleAddGame}
+        color="#FF0000"
+        size="medium"
+        position="bottom-right"
+      />
     </SafeAreaView>
   );
 }

@@ -5,8 +5,10 @@ interface HeaderProps {
   title: string;
   showNotifications?: boolean;
   showMenu?: boolean;
+  showBack?: boolean;
   onNotificationPress?: () => void;
   onMenuPress?: () => void;
+  onBackPress?: () => void;
   className?: string;
 }
 
@@ -14,8 +16,10 @@ export default function Header({
   title,
   showNotifications = true,
   showMenu = true,
+  showBack = false,
   onNotificationPress,
   onMenuPress,
+  onBackPress,
   className = ''
 }: HeaderProps) {
   return (
@@ -32,8 +36,29 @@ export default function Header({
         elevation: 3
       }}
     >
-      <Text className="text-xl font-bold text-black">{title}</Text>
-      <View className="flex-row space-x-4">
+      {/* Left side - Back button or title */}
+      <View className="flex-1">
+        {showBack ? (
+          <TouchableOpacity onPress={onBackPress} className="p-2">
+            <Ionicons name="arrow-back" size={24} color="#000" />
+          </TouchableOpacity>
+        ) : (
+          <Text className="text-xl font-bold text-black">{title}</Text>
+        )}
+      </View>
+
+      {/* Center - Title (only when back button is shown) */}
+      {showBack && (
+        <Text
+          className="flex-1 text-center text-lg font-bold text-black"
+          numberOfLines={1}
+        >
+          {title}
+        </Text>
+      )}
+
+      {/* Right side - Notifications and Menu */}
+      <View className="flex-1 flex-row justify-end space-x-4">
         {showNotifications && (
           <TouchableOpacity onPress={onNotificationPress}>
             <Ionicons name="notifications" size={24} color="#000" />
